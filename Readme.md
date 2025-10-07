@@ -1,7 +1,7 @@
 # Личный проект «Кекстаграм»
 
 * Студент: [Михаил Кулешов](https://up.htmlacademy.ru/javascript-individual/2/user/1919603).
-Наставник: [Александр Сударев](https://htmlacademy.ru/profile/id1152185).
+* Наставник: [Александр Сударев](https://htmlacademy.ru/profile/id1152185).
 
 ---
 
