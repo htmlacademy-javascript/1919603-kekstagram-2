@@ -3,7 +3,8 @@ const SCALE_MAX = 100;
 const SCALE_MIN = 25;
 const SCALE_STEP = 25;
 
-const VALIDATE_COMMENT_ERROR = 'Максимальная длинна комментария 140 символов';
+const VALIDATE_COMMENT_LENGTH = 140;
+const NUMBER_OF_COMMENTS = 5;
 
 const MAIN_URL = 'https://31.javascript.htmlacademy.pro/kekstagram';
 const STATUS_SUCCESS = 200;
@@ -36,7 +37,8 @@ const Filter = {
 const IMAGE_TYPES = ['jpg', 'jpeg', 'png'];
 
 export {
-  VALIDATE_COMMENT_ERROR,
+  NUMBER_OF_COMMENTS,
+  VALIDATE_COMMENT_LENGTH,
   SCALE_MAX,
   SCALE_MIN,
   SCALE_STEP,

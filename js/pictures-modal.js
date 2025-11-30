@@ -1,5 +1,6 @@
 import {isEscapeKey} from './utils.js';
 import {renderComments} from './render-picture-comments.js';
+import {NUMBER_OF_COMMENTS} from './data.js';
 
 const pictureModalElement = document.querySelector('.big-picture');
 const closeButtonElement = pictureModalElement.querySelector('.big-picture__cancel');
@@ -10,7 +11,7 @@ const commentShownCountElement = pictureModalElement.querySelector('.social__com
 // Временные переменные для обеспечения работоспособности функций openPictureWindow,
 // loadingComments и удаления обработчика по клику
 let temporaryСommentsArr = [];
-let temporaryCommentsСount = 5;
+let temporaryCommentsСount = NUMBER_OF_COMMENTS;
 
 // Закрытие окна по нажатию клавиши Esc
 function onDocumentKeydown (evt) {
@@ -39,22 +40,22 @@ function fillingPictureData (url, description, likes, comments) {
 
 // Загрузка нужного числа комментариев при открытии окна
 function renderRequiredNumberOfComments (arr) {
-  if (arr.length <= 5) {
+  if (arr.length <= NUMBER_OF_COMMENTS) {
     renderComments(arr);
 
     commentShownCountElement.textContent = arr.length;
     commentsLoaderElement.classList.add('hidden');
   } else {
-    const slicedArr = arr.slice(0, 5);
+    const slicedArr = arr.slice(0, NUMBER_OF_COMMENTS);
 
     renderComments(slicedArr);
-    commentShownCountElement.textContent = 5;
+    commentShownCountElement.textContent = NUMBER_OF_COMMENTS;
   }
 }
 
 // Загрузка новых комментариев при нажатии на "Загрузить еще"
 function loadingComments () {
-  temporaryCommentsСount += 5;
+  temporaryCommentsСount += NUMBER_OF_COMMENTS;
 
   if (temporaryСommentsArr.length - temporaryCommentsСount <= 0) {
     commentsLoaderElement.classList.add('hidden');
@@ -91,7 +92,7 @@ function closePictureWindow () {
 
   commentsLoaderElement.removeEventListener('click', loadingComments);
 
-  temporaryCommentsСount = 5;
+  temporaryCommentsСount = NUMBER_OF_COMMENTS;
 }
 
 export {openPictureWindow};

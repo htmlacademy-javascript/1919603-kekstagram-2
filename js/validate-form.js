@@ -1,4 +1,4 @@
-import {VALIDATE_COMMENT_ERROR, IMAGE_TYPES} from './data.js';
+import {VALIDATE_COMMENT_LENGTH, IMAGE_TYPES} from './data.js';
 import {sendData} from './api.js';
 import {addInfo} from './messages.js';
 import {blockSubmitButton, unblockSubmitButton, closeForm} from './form.js';
@@ -23,7 +23,7 @@ function validateComment (string) {
   return string.length <= 140;
 }
 
-pristine.addValidator(textDescriptionInput, validateComment, VALIDATE_COMMENT_ERROR);
+pristine.addValidator(textDescriptionInput, validateComment, `Максимальная длинна комментария ${VALIDATE_COMMENT_LENGTH} символов`);
 
 // Валидация хэштэгов
 function validateHashtags(string) {
