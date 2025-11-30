@@ -2,13 +2,13 @@ import {debounce} from './utils.js';
 import {renderPictures} from './render-pictures.js';
 import {PICTURES_COUNT, Filter} from './data.js';
 
-const filter = document.querySelector('.img-filters');
+const filterElement = document.querySelector('.img-filters');
 
 let currentFilter = '';
 let pictures = [];
 
 function turnFilterOn (loadedPictures) {
-  filter.classList.remove('img-filters--inactive');
+  filterElement.classList.remove('img-filters--inactive');
   pictures = [...loadedPictures];
   currentFilter = Filter.DEFAULT;
   return pictures;
@@ -45,13 +45,13 @@ function onFilterPictures (evt) {
     return;
   }
 
-  filter.querySelector('.img-filters__button--active').classList.remove('img-filters__button--active');
+  filterElement.querySelector('.img-filters__button--active').classList.remove('img-filters__button--active');
 
   clickedButton.classList.add('img-filters__button--active');
   currentFilter = clickedButton.id;
   debouncedRenderPictures(filterPictures());
 }
 
-filter.addEventListener('click', onFilterPictures);
+filterElement.addEventListener('click', onFilterPictures);
 
 export {turnFilterOn, filterPictures};

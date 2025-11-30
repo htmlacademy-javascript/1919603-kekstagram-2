@@ -1,8 +1,8 @@
 // Рендерим комментарии к карточке в большом окне
 
-const pictureWindow = document.querySelector('.big-picture');
-const templateComment = pictureWindow.querySelector('.social__comment');
-const commentsListElement = pictureWindow.querySelector('.social__comments');
+const pictureWindowElement = document.querySelector('.big-picture');
+const templateComment = pictureWindowElement.querySelector('.social__comment');
+const commentsListElement = pictureWindowElement.querySelector('.social__comments');
 const commentsListFragment = document.createDocumentFragment();
 
 function renderComments (comments) {

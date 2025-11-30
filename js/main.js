@@ -1,5 +1,6 @@
 import {renderPictures} from './render-pictures.js';
-import {openForm, imgUploadInput, setFormSubmit} from './form.js';
+import {openForm, imgUploadInput} from './form.js';
+import {setFormSubmit} from './validate-form.js';
 import {getData} from './api.js';
 import {showErrorMessage} from './messages.js';
 import {turnFilterOn, filterPictures} from './upload-pictures-filter.js';

@@ -1,15 +1,15 @@
 // Масштабирование изображения в форме загрузки изображения
 import {SCALE_MAX, SCALE_MIN, SCALE_STEP} from './data.js';
 
-const form = document.querySelector('.img-upload__form');
-const scaleControlValue = form.querySelector('.scale__control--value');
-const previewImage = form.querySelector('.img-upload__preview img');
+const formElement = document.querySelector('.img-upload__form');
+const scaleControlValueElement = formElement.querySelector('.scale__control--value');
+const previewImageElement = formElement.querySelector('.img-upload__preview img');
 
 let scale = 100;
 
 function changeScale () {
-  scaleControlValue.setAttribute('value', `${scale}%`);
-  previewImage.style.transform = `scale(${scale / 100})`;
+  scaleControlValueElement.setAttribute('value', `${scale}%`);
+  previewImageElement.style.transform = `scale(${scale / 100})`;
 }
 
 function minusScale () {

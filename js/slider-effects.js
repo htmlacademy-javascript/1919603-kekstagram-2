@@ -1,13 +1,13 @@
 // Применение эффектов в форме загрузки изображения с помощью библиотеки noUiSlider
 import {Effects, StyleFilterByEffects, getEffectSelector} from './slider-options.js';
 
-const form = document.querySelector('.img-upload__form');
-const sliderInputWrapper = form.querySelector('.img-upload__effect-level');
-const levelInput = form.querySelector('.effect-level__value');
-const sliderElement = form.querySelector('.effect-level__slider');
-const effectRadioButtons = form.querySelectorAll('.effects__radio');
-const imgPreview = form.querySelector('.img-upload__preview').firstElementChild;
-const selectorImg = imgPreview.classList;
+const formElement = document.querySelector('.img-upload__form');
+const sliderInputWrapper = formElement.querySelector('.img-upload__effect-level');
+const levelInput = formElement.querySelector('.effect-level__value');
+const sliderElement = formElement.querySelector('.effect-level__slider');
+const effectRadioButtons = formElement.querySelectorAll('.effects__radio');
+const imgPreviewElement = formElement.querySelector('.img-upload__preview').firstElementChild;
+const selectorImg = imgPreviewElement.classList;
 
 function getUpdateSliderOptions (effect, slider) {
   return slider.noUiSlider.updateOptions(Effects[effect]);
@@ -16,9 +16,9 @@ function getUpdateSliderOptions (effect, slider) {
 function resetFilter () {
   sliderInputWrapper.classList.add('hidden');
 
-  imgPreview.style.removeProperty('filter');
-  imgPreview.className = '';
-  imgPreview.classList.add('effects__preview--none');
+  imgPreviewElement.style.removeProperty('filter');
+  imgPreviewElement.className = '';
+  imgPreviewElement.classList.add('effects__preview--none');
 }
 
 noUiSlider.create(sliderElement, {
@@ -37,7 +37,7 @@ function onEffectRadioButtonClick (evt) {
   if (currentRadioButton) {
     const effectButtonValue = currentRadioButton.value;
 
-    imgPreview.classList.replace(selectorImg, getEffectSelector(effectButtonValue));
+    imgPreviewElement.classList.replace(selectorImg, getEffectSelector(effectButtonValue));
     getUpdateSliderOptions(effectButtonValue, sliderElement);
   }
 }
@@ -50,7 +50,7 @@ sliderElement.noUiSlider.on('update', () => {
       if (item.value !== 'none') {
         sliderInputWrapper.classList.remove('hidden');
 
-        imgPreview.style.filter = StyleFilterByEffects[item.value](levelInput.value);
+        imgPreviewElement.style.filter = StyleFilterByEffects[item.value](levelInput.value);
       } else {
         resetFilter();
       }

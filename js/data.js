@@ -35,6 +35,8 @@ const Filter = {
   DISCUSSED: 'filter-discussed',
 };
 
+const IMAGE_TYPES = ['jpg', 'jpeg', 'png'];
+
 export {
   VALIDATE_COMMENT_ERROR,
   VALIDATE_HASHTAGS_ERROR,
@@ -48,5 +50,6 @@ export {
   ErrorMessage,
   ERROR_SHOW_TIME,
   PICTURES_COUNT,
-  Filter
+  Filter,
+  IMAGE_TYPES
 };

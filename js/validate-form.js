@@ -1,3 +1,14 @@
+import {VALIDATE_COMMENT_ERROR, VALIDATE_HASHTAGS_ERROR, IMAGE_TYPES} from './data.js';
+import {sendData} from './api.js';
+import {addInfo} from './messages.js';
+import {blockSubmitButton, unblockSubmitButton, closeForm} from './form.js';
+
+const formElement = document.querySelector('.img-upload__form');
+const successMessageElement = document.querySelector('#success').content.querySelector('.success');
+const errorMessageElement = document.querySelector('#error').content.querySelector('.error');
+const textDescriptionInput = formElement.querySelector('.text__description');
+const textHashtagsInput = formElement.querySelector('.text__hashtags');
+
 // Валидация комментариев
 function validateComment (string) {
   return string.length <= 140;
@@ -42,4 +53,43 @@ function validateHashtags(string) {
   return true;
 }
 
-export {validateComment, validateHashtags};
+function isValidType (file) {
+  const fileName = file.name.toLowerCase();
+  return IMAGE_TYPES.some((it) => fileName.endsWith(it));
+}
+
+const pristine = new Pristine(formElement, {
+  classTo: 'img-upload__form',
+  errorClass: 'form__item--invalid',
+  successClass: 'form__item--valid',
+  errorTextParent: 'img-upload__field-wrapper',
+  errorTextTag: 'div',
+  errorTextClass: 'img-upload__field-wrapper--error'
+});
+
+// отправка формы и добавление уведомления об итогах отправки
+function setFormSubmit () {
+  formElement.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+    const isValid = pristine.validate();
+    blockSubmitButton();
+
+    if (isValid) {
+      sendData(new FormData(formElement))
+        .then(() => {
+          addInfo(successMessageElement);
+          closeForm();
+          unblockSubmitButton();
+        })
+        .catch (() => {
+          addInfo(errorMessageElement);
+          unblockSubmitButton();
+        });
+    }
+  });
+}
+
+pristine.addValidator(textDescriptionInput, validateComment, VALIDATE_COMMENT_ERROR);
+pristine.addValidator(textHashtagsInput, validateHashtags, VALIDATE_HASHTAGS_ERROR);
+
+export {validateComment, validateHashtags, isValidType, setFormSubmit};

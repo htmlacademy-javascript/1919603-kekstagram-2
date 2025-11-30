@@ -1,11 +1,11 @@
 import {isEscapeKey} from './utils.js';
 import {renderComments} from './render-picture-comments.js';
 
-const pictureModal = document.querySelector('.big-picture');
-const closeButtonElement = pictureModal.querySelector('.big-picture__cancel');
-const commentsLoader = pictureModal.querySelector('.comments-loader');
-const body = document.querySelector('body');
-const commentShownCount = pictureModal.querySelector('.social__comment-shown-count');
+const pictureModalElement = document.querySelector('.big-picture');
+const closeButtonElement = pictureModalElement.querySelector('.big-picture__cancel');
+const commentsLoaderElement = pictureModalElement.querySelector('.comments-loader');
+const bodyElement = document.querySelector('body');
+const commentShownCountElement = pictureModalElement.querySelector('.social__comment-shown-count');
 
 // Временные переменные для обеспечения работоспособности функций openPictureWindow,
 // loadingComments и удаления обработчика по клику
@@ -22,17 +22,17 @@ function onDocumentKeydown (evt) {
 
 // Заполнение данными открывшееся окно
 function fillingPictureData (url, description, likes, comments) {
-  pictureModal.classList.remove('hidden');
-  body.classList.add('modal-open');
-  commentsLoader.classList.remove('hidden');
+  pictureModalElement.classList.remove('hidden');
+  bodyElement.classList.add('modal-open');
+  commentsLoaderElement.classList.remove('hidden');
   document.addEventListener('keydown', onDocumentKeydown);
 
   temporaryСommentsArr = comments;
 
-  pictureModal.querySelector('img').src = url;
-  pictureModal.querySelector('.likes-count').textContent = likes;
-  pictureModal.querySelector('.social__caption').textContent = description;
-  pictureModal.querySelector('.social__comment-total-count').textContent = temporaryСommentsArr.length;
+  pictureModalElement.querySelector('img').src = url;
+  pictureModalElement.querySelector('.likes-count').textContent = likes;
+  pictureModalElement.querySelector('.social__caption').textContent = description;
+  pictureModalElement.querySelector('.social__comment-total-count').textContent = temporaryСommentsArr.length;
 
   return temporaryСommentsArr;
 }
@@ -42,13 +42,13 @@ function renderRequiredNumberOfComments (arr) {
   if (arr.length <= 5) {
     renderComments(arr);
 
-    commentShownCount.textContent = arr.length;
-    commentsLoader.classList.add('hidden');
+    commentShownCountElement.textContent = arr.length;
+    commentsLoaderElement.classList.add('hidden');
   } else {
     const slicedArr = arr.slice(0, 5);
 
     renderComments(slicedArr);
-    commentShownCount.textContent = 5;
+    commentShownCountElement.textContent = 5;
   }
 }
 
@@ -57,17 +57,17 @@ function loadingComments () {
   temporaryCommentsСount += 5;
 
   if (temporaryСommentsArr.length - temporaryCommentsСount <= 0) {
-    commentsLoader.classList.add('hidden');
+    commentsLoaderElement.classList.add('hidden');
 
     const slicedArr = temporaryСommentsArr.slice(0, temporaryСommentsArr.length);
 
     renderComments(slicedArr);
-    commentShownCount.textContent = temporaryСommentsArr.length;
+    commentShownCountElement.textContent = temporaryСommentsArr.length;
   } else {
     const slicedArr = temporaryСommentsArr.slice(0, temporaryCommentsСount);
 
     renderComments(slicedArr);
-    commentShownCount.textContent = temporaryCommentsСount;
+    commentShownCountElement.textContent = temporaryCommentsСount;
   }
 }
 
@@ -78,18 +78,18 @@ function openPictureWindow (url, description, likes, comments) {
 
   renderRequiredNumberOfComments(temporaryСommentsArr);
 
-  commentsLoader.addEventListener('click', loadingComments);
+  commentsLoaderElement.addEventListener('click', loadingComments);
   closeButtonElement.addEventListener('click', closePictureWindow);
 }
 
 // Закрытие большого окна карточки и удаление обработчиков
 function closePictureWindow () {
-  pictureModal.classList.add('hidden');
-  body.classList.remove('modal-open');
+  pictureModalElement.classList.add('hidden');
+  bodyElement.classList.remove('modal-open');
 
   document.removeEventListener('keydown', onDocumentKeydown);
 
-  commentsLoader.removeEventListener('click', loadingComments);
+  commentsLoaderElement.removeEventListener('click', loadingComments);
 
   temporaryCommentsСount = 5;
 }

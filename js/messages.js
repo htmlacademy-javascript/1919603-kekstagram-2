@@ -1,8 +1,7 @@
 import {isEscapeKey} from './utils.js';
 import {ERROR_SHOW_TIME} from './data.js';
 
-const body = document.querySelector('body');
-const main = document.querySelector('main');
+const bodyElement = document.querySelector('body');
 
 // закрытие информационных окошек и удаление обработчиков
 function onCloseInfo (evt) {
@@ -16,17 +15,17 @@ function onCloseInfo (evt) {
     target.classList.contains('error__button')) {
 
     info.remove();
-    body.removeEventListener('click', onCloseInfo);
-    body.removeEventListener('keydown', onCloseInfo);
+    bodyElement.removeEventListener('click', onCloseInfo);
+    bodyElement.removeEventListener('keydown', onCloseInfo);
   }
 }
 
 // добавление окна с информацией об итоге загрузки изображения
 function addInfo (template) {
   const infoNode = template.cloneNode(true);
-  body.append(infoNode);
-  body.addEventListener('click', onCloseInfo);
-  body.addEventListener('keydown', onCloseInfo);
+  bodyElement.append(infoNode);
+  bodyElement.addEventListener('click', onCloseInfo);
+  bodyElement.addEventListener('keydown', onCloseInfo);
 }
 
 // окно предупреждения об ошибке загрузки данных
@@ -38,7 +37,7 @@ function showErrorMessage (message) {
 
   error.textContent = message;
 
-  main.prepend(error);
+  bodyElement.append(error);
 
   setTimeout(() => {
     error.remove();
