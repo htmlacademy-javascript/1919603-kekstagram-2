@@ -5,6 +5,8 @@ const SCALE_STEP = 25;
 
 const VALIDATE_COMMENT_LENGTH = 140;
 const NUMBER_OF_COMMENTS = 5;
+const HASHTAGS_LENGTH = 20;
+const NUMBERS_OF_HASHTAGS = 5;
 
 const MAIN_URL = 'https://31.javascript.htmlacademy.pro/kekstagram';
 const STATUS_SUCCESS = 200;
@@ -37,6 +39,8 @@ const Filter = {
 const IMAGE_TYPES = ['jpg', 'jpeg', 'png'];
 
 export {
+  HASHTAGS_LENGTH,
+  NUMBERS_OF_HASHTAGS,
   NUMBER_OF_COMMENTS,
   VALIDATE_COMMENT_LENGTH,
   SCALE_MAX,

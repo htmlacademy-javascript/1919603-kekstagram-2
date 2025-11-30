@@ -5,11 +5,11 @@ const formElement = document.querySelector('.img-upload__form');
 const scaleControlValueElement = formElement.querySelector('.scale__control--value');
 const previewImageElement = formElement.querySelector('.img-upload__preview img');
 
-let scale = 100;
+let scale = SCALE_MAX;
 
 function changeScale () {
   scaleControlValueElement.setAttribute('value', `${scale}%`);
-  previewImageElement.style.transform = `scale(${scale / 100})`;
+  previewImageElement.style.transform = `scale(${scale / SCALE_MAX})`;
 }
 
 function minusScale () {

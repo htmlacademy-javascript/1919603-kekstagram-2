@@ -1,4 +1,4 @@
-import {VALIDATE_COMMENT_LENGTH, IMAGE_TYPES} from './data.js';
+import {VALIDATE_COMMENT_LENGTH, IMAGE_TYPES, HASHTAGS_LENGTH, NUMBERS_OF_HASHTAGS} from './data.js';
 import {sendData} from './api.js';
 import {addInfo} from './messages.js';
 import {blockSubmitButton, unblockSubmitButton, closeForm} from './form.js';
@@ -20,7 +20,7 @@ const pristine = new Pristine(formElement, {
 
 // Валидация комментариев
 function validateComment (string) {
-  return string.length <= 140;
+  return string.length <= VALIDATE_COMMENT_LENGTH;
 }
 
 pristine.addValidator(textDescriptionInput, validateComment, `Максимальная длинна комментария ${VALIDATE_COMMENT_LENGTH} символов`);
@@ -29,8 +29,8 @@ pristine.addValidator(textDescriptionInput, validateComment, `Максималь
 function validateHashtags(string) {
   const tags = string.trim().split(/\s+/).filter(Boolean);
 
-  if (tags.length > 5) {
-    return { valid: false, error: 'Превышено количество хэштегов (не более 5)' };
+  if (tags.length > NUMBERS_OF_HASHTAGS) {
+    return { valid: false, error: `Превышено количество хэштегов (не более ${NUMBERS_OF_HASHTAGS})` };
   }
 
   const lowerSet = new Set();
@@ -50,8 +50,8 @@ function validateHashtags(string) {
       return { valid: false, error: 'Введён невалидный хэштег — только буквы и цифры' };
     }
 
-    if (tag.length > 20) {
-      return { valid: false, error: 'Хэштег не может быть длиннее 20 символов' };
+    if (tag.length > HASHTAGS_LENGTH) {
+      return { valid: false, error: `Хэштег не может быть длиннее ${HASHTAGS_LENGTH} символов` };
     }
 
     const lowerTag = tag.toLowerCase();
