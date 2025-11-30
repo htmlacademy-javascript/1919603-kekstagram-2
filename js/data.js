@@ -5,8 +5,6 @@ const SCALE_STEP = 25;
 
 const VALIDATE_COMMENT_ERROR = 'Максимальная длинна комментария 140 символов';
 
-const VALIDATE_HASHTAGS_ERROR = 'Неверный хэштэг';
-
 const MAIN_URL = 'https://31.javascript.htmlacademy.pro/kekstagram';
 const STATUS_SUCCESS = 200;
 
@@ -39,7 +37,6 @@ const IMAGE_TYPES = ['jpg', 'jpeg', 'png'];
 
 export {
   VALIDATE_COMMENT_ERROR,
-  VALIDATE_HASHTAGS_ERROR,
   SCALE_MAX,
   SCALE_MIN,
   SCALE_STEP,

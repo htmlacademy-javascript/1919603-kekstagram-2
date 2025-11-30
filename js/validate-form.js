@@ -1,4 +1,4 @@
-import {VALIDATE_COMMENT_ERROR, VALIDATE_HASHTAGS_ERROR, IMAGE_TYPES} from './data.js';
+import {VALIDATE_COMMENT_ERROR, IMAGE_TYPES} from './data.js';
 import {sendData} from './api.js';
 import {addInfo} from './messages.js';
 import {blockSubmitButton, unblockSubmitButton, closeForm} from './form.js';
@@ -10,7 +10,7 @@ const textDescriptionInput = formElement.querySelector('.text__description');
 const textHashtagsInput = formElement.querySelector('.text__hashtags');
 
 const pristine = new Pristine(formElement, {
-  classTo: 'img-upload__form',
+  classTo: 'img-upload__field-wrapper',
   errorClass: 'form__item--invalid',
   successClass: 'form__item--valid',
   errorTextParent: 'img-upload__field-wrapper',
@@ -30,41 +30,47 @@ function validateHashtags(string) {
   const tags = string.trim().split(/\s+/).filter(Boolean);
 
   if (tags.length > 5) {
-    return false;
+    return { valid: false, error: 'Превышено количество хэштегов (не более 5)' };
   }
 
   const lowerSet = new Set();
 
   for (const tag of tags) {
     if (!tag.startsWith('#')) {
-      return false;
+      return { valid: false, error: 'Хэштег должен начинаться с символа #' };
     }
 
     const tagBody = tag.slice(1);
 
     if (tagBody.length === 0) {
-      return false;
+      return { valid: false, error: 'Хэштег не может состоять только из #' };
     }
 
     if (!/^[\p{L}\p{N}]+$/u.test(tagBody)) {
-      return false;
+      return { valid: false, error: 'Введён невалидный хэштег — только буквы и цифры' };
     }
 
     if (tag.length > 20) {
-      return false;
+      return { valid: false, error: 'Хэштег не может быть длиннее 20 символов' };
     }
 
     const lowerTag = tag.toLowerCase();
     if (lowerSet.has(lowerTag)) {
-      return false;
+      return { valid: false, error: 'Хэштеги не должны повторяться' };
     }
     lowerSet.add(lowerTag);
   }
 
-  return true;
+  return { valid: true };
 }
 
-pristine.addValidator(textHashtagsInput, validateHashtags, VALIDATE_HASHTAGS_ERROR);
+pristine.addValidator(
+  textHashtagsInput,
+  (value) => validateHashtags(value).valid,
+  () => validateHashtags(textHashtagsInput.value).error,
+  2,
+  false
+);
 
 function isValidType (file) {
   const fileName = file.name.toLowerCase();
@@ -74,8 +80,8 @@ function isValidType (file) {
 // отправка формы и добавление уведомления об итогах отправки
 function setFormSubmit () {
   formElement.addEventListener('submit', (evt) => {
-    evt.preventDefault();
     const isValid = pristine.validate();
+    evt.preventDefault();
 
     if (isValid) {
       blockSubmitButton();
@@ -94,4 +100,4 @@ function setFormSubmit () {
   });
 }
 
-export {validateComment, validateHashtags, isValidType, setFormSubmit};
+export {validateComment, validateHashtags, isValidType, setFormSubmit, pristine};

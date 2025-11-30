@@ -1,5 +1,5 @@
 import {isEscapeKey, cancelEscKeydown} from './utils.js';
-import {isValidType} from './validate-form.js';
+import {isValidType, pristine} from './validate-form.js';
 import {minusScale, plusScale, resetScale} from './pitures-scale.js';
 import {onEffectRadioButtonClick, resetFilter} from './slider-effects.js';
 
@@ -58,6 +58,7 @@ function closeForm () {
   textDescriptionInput.removeEventListener('keydown', cancelEscKeydown);
   textHashtagsInput.removeEventListener('keydown', cancelEscKeydown);
 
+  pristine.reset();
   formElement.reset();
   resetScale();
   resetFilter();

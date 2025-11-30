@@ -29,6 +29,15 @@ noUiSlider.create(sliderElement, {
   start: 100,
   step: 1,
   connect: 'lower',
+  format: {
+    to: (value) => {
+      if (Number.isInteger(value)) {
+        return value.toFixed(0);
+      }
+      return value.toFixed(1);
+    },
+    from: (value) => parseFloat(value),
+  },
 });
 
 function onEffectRadioButtonClick (evt) {
