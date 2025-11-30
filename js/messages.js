@@ -2,6 +2,9 @@ import {isEscapeKey} from './utils.js';
 import {ERROR_SHOW_TIME} from './data.js';
 
 const bodyElement = document.querySelector('body');
+const dataErrorTemplateFragment = document.querySelector('#data-error').content;
+const dataErrorTemplate = dataErrorTemplateFragment.querySelector('.data-error');
+const fragment = document.createDocumentFragment();
 
 // закрытие информационных окошек и удаление обработчиков
 function onCloseInfo (evt) {
@@ -30,17 +33,15 @@ function addInfo (template) {
 
 // окно предупреждения об ошибке загрузки данных
 function showErrorMessage (message) {
-  const error = document.createElement('div');
-  error.style.backgroundColor = 'red';
-  error.style.textAlign = 'center';
-  error.style.padding = '5px 0px';
+  const errorElement = dataErrorTemplate.cloneNode(true);
 
-  error.textContent = message;
+  errorElement.textContent = message;
 
-  bodyElement.append(error);
+  fragment.append(errorElement);
+  bodyElement.append(fragment);
 
   setTimeout(() => {
-    error.remove();
+    errorElement.remove();
   }, ERROR_SHOW_TIME);
 }
 

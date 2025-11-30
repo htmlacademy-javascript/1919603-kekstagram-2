@@ -9,10 +9,21 @@ const errorMessageElement = document.querySelector('#error').content.querySelect
 const textDescriptionInput = formElement.querySelector('.text__description');
 const textHashtagsInput = formElement.querySelector('.text__hashtags');
 
+const pristine = new Pristine(formElement, {
+  classTo: 'img-upload__form',
+  errorClass: 'form__item--invalid',
+  successClass: 'form__item--valid',
+  errorTextParent: 'img-upload__field-wrapper',
+  errorTextTag: 'div',
+  errorTextClass: 'img-upload__field-wrapper--error'
+});
+
 // Валидация комментариев
 function validateComment (string) {
   return string.length <= 140;
 }
+
+pristine.addValidator(textDescriptionInput, validateComment, VALIDATE_COMMENT_ERROR);
 
 // Валидация хэштэгов
 function validateHashtags(string) {
@@ -53,33 +64,27 @@ function validateHashtags(string) {
   return true;
 }
 
+pristine.addValidator(textHashtagsInput, validateHashtags, VALIDATE_HASHTAGS_ERROR);
+
 function isValidType (file) {
   const fileName = file.name.toLowerCase();
   return IMAGE_TYPES.some((it) => fileName.endsWith(it));
 }
-
-const pristine = new Pristine(formElement, {
-  classTo: 'img-upload__form',
-  errorClass: 'form__item--invalid',
-  successClass: 'form__item--valid',
-  errorTextParent: 'img-upload__field-wrapper',
-  errorTextTag: 'div',
-  errorTextClass: 'img-upload__field-wrapper--error'
-});
 
 // отправка формы и добавление уведомления об итогах отправки
 function setFormSubmit () {
   formElement.addEventListener('submit', (evt) => {
     evt.preventDefault();
     const isValid = pristine.validate();
-    blockSubmitButton();
 
     if (isValid) {
+      blockSubmitButton();
       sendData(new FormData(formElement))
         .then(() => {
           addInfo(successMessageElement);
           closeForm();
           unblockSubmitButton();
+          pristine.reset();
         })
         .catch (() => {
           addInfo(errorMessageElement);
@@ -88,8 +93,5 @@ function setFormSubmit () {
     }
   });
 }
-
-pristine.addValidator(textDescriptionInput, validateComment, VALIDATE_COMMENT_ERROR);
-pristine.addValidator(textHashtagsInput, validateHashtags, VALIDATE_HASHTAGS_ERROR);
 
 export {validateComment, validateHashtags, isValidType, setFormSubmit};
